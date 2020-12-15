@@ -1,62 +1,49 @@
 import 'package:flutter/material.dart';
-import './questao.dart';
+import 'package:projeto_perguntas/questionario.dart';
+import 'package:projeto_perguntas/resultado.dart';
+import './resultado.dart';
+import './questionario.dart';
 
 main() => runApp(PerguntaApp());
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
+  final _perguntas = const [
+    {
+      'pergunta': 'Qual é a sua cor favorita?',
+      'respostas': ['Azul', 'Verde', 'Amarelo', 'Roxo']
+    },
+    {
+      'pergunta': 'Qual é o seu animal favorito?',
+      'respostas': ['Cachorro', 'Gato', 'Sapo', 'Pássaro']
+    },
+    {
+      'pergunta': 'Qual seu hobbie favorito?',
+      'respostas': ['Parque', 'Aviação', 'Shopping', 'Cinema']
+    }
+  ];
 
   void _responder() {
-    setState(() {
-      _perguntaSelecionada++;
-    });
+    if (temPerguntaSelecionada) {
+      setState(() {
+        _perguntaSelecionada++;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    
-    final perguntas = [
-      'Qual é a sua cor favorita?',
-      'Qual é o seu animal favorito?'
-    ];
-
-    /* Esta função pode ser chamando no evento onPressed, pois retorna
-    * uma outra funçao
-    void Function() funcaoQueRetoraUmaOutraFuncao() {
-      return() {
-        print('Resposta #2');
-      };
-    }*/
-
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Perguntas'),
-        ),
-        body: Column(
-          children: [
-            Questao(perguntas[_perguntaSelecionada]),
-            RaisedButton(
-              onPressed: _responder,
-              child: Text('Resposta 1'),
-            ),
-            RaisedButton(
-              onPressed: _responder,
-              child: Text('Resposta 2'),
-            ),
-            RaisedButton(
-              onPressed: _responder,
-              child: Text('Resposta 3'),
-            )
-          ],
-        ),
+        home: Scaffold(
+      appBar: AppBar(
+        title: Text('Perguntas'),
       ),
-    ); 
+      body: temPerguntaSelecionada ? Questionario() : Resultado(),
+    ));
   }
 }
 
 class PerguntaApp extends StatefulWidget {
-  
   _PerguntaAppState createState() {
     return _PerguntaAppState();
   }
